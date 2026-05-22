@@ -9,9 +9,23 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const ADMIN_SECRET = process.env.ADMIN_SECRET || 'secret123';
 const contentFilePath = path.join(__dirname, 'content.json');
+const messagesFilePath = path.join(__dirname, 'messages.json');
 const publicSiteRoot = path.resolve(__dirname, '..');
 const SESSION_TTL = 1000 * 60 * 60; // 1 hour
 const sessions = new Map();
+
+function loadMessages() {
+    try {
+        const raw = fs.readFileSync(messagesFilePath, 'utf-8');
+        return JSON.parse(raw);
+    } catch (error) {
+        return [];
+    }
+}
+
+function saveMessages(messages) {
+    fs.writeFileSync(messagesFilePath, JSON.stringify(messages, null, 2), 'utf-8');
+}
 
 app.use(cors());
 app.use(express.json());
@@ -117,7 +131,7 @@ app.get('/', (req, res) => {
 app.use(express.static(publicSiteRoot));
 app.use(express.static(__dirname));
 
-let receivedMessages = [];
+let receivedMessages = loadMessages();
 
 // Content endpoints
 app.get('/api/content', (req, res) => {
@@ -179,10 +193,16 @@ app.post('/api/messages', (req, res) => {
 
     const newLog = { id: Date.now(), name, email, message, timestamp: new Date() };
     receivedMessages.push(newLog);
+    saveMessages(receivedMessages);
     
     console.log("📥 NEW COMM RECEIVED:\n", newLog);
     
     return res.status(201).json({ status: "ACCEPTED", message: "Packet successfully cataloged" });
+});
+
+app.get('/api/messages', requireAdminApi, (req, res) => {
+    const messages = loadMessages();
+    res.json({ messages });
 });
 
 // Health check route

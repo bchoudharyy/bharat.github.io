@@ -32,7 +32,7 @@
                         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                             <div>
                                 <h2 class="text-xl font-semibold text-white">Admin Dashboard</h2>
-                                <p class="mt-2 text-slate-400">Review portfolio status, session health, and project visibility.</p>
+                                <p class="mt-2 text-slate-400">Review portfolio status, session health, messages, and project visibility.</p>
                             </div>
                             <div class="flex flex-wrap gap-3">
                                 <button id="loadButton" class="rounded-full bg-neonBlue px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100">Load content</button>
@@ -41,6 +41,16 @@
                         </div>
                     </div>
                     <div id="dashboardStats" class="grid gap-4 md:grid-cols-2 xl:grid-cols-4"></div>
+                    <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-white">Recent messages</h3>
+                                <p class="mt-1 text-slate-400 text-sm">Messages submitted through the main site contact form.</p>
+                            </div>
+                            <button id="refreshMessagesButton" type="button" class="rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-slate-200 hover:border-neonBlue">Refresh</button>
+                        </div>
+                        <div id="dashboardMessages" class="space-y-4"></div>
+                    </div>
                     <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-6">
                         <p class="text-slate-400">This area is your admin command center. Use the navigation above to switch between editor, project management, and encryption workflows.</p>
                     </div>
@@ -167,7 +177,10 @@
                                 <h2 class="text-xl font-semibold text-white">Projects Manager</h2>
                                 <p class="mt-2 text-slate-400">Manage public and private projects separately, and control project visibility.</p>
                             </div>
-                            <button id="addProject" type="button" class="rounded-full bg-neonBlue px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-slate-100">Add project</button>
+                            <div class="flex flex-wrap gap-3">
+                                <button id="addProject" type="button" class="rounded-full bg-neonBlue px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-slate-100">Add project</button>
+                                <button id="saveProjectsButton" type="button" class="rounded-full bg-neonPink px-5 py-3 text-sm font-semibold text-white hover:bg-pink-500">Save projects</button>
+                            </div>
                         </div>
                     </div>
                     <div id="projectsList" class="space-y-4"></div>

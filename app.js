@@ -70,7 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div>
                             <div class="flex justify-between items-start mb-4">
                                 <span class="text-xs font-bold text-neonBlue bg-neonBlue/10 px-2 py-1 rounded">${project.category || 'Project'}</span>
-                                <span class="text-xs text-slate-500 font-mono">${(index + 1).toString().padStart(2, '0')} // ${statusLabel}</span>
+                                <div class="text-right space-y-1">
+                                    <span class="text-xs text-slate-500 font-mono">${(index + 1).toString().padStart(2, '0')} // ${statusLabel}</span>
+                                    ${project.date ? `<span class="text-xs text-slate-400 font-mono">${project.date}</span>` : ''}
+                                </div>
                             </div>
                             <h3 class="text-xl font-bold text-white group-hover:text-neonBlue transition duration-300">${project.title}</h3>
                             <p class="text-slate-400 text-sm mt-2">${project.description}</p>

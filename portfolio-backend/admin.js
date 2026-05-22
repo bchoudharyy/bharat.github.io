@@ -29,9 +29,12 @@ const addStatButton = document.getElementById('addStat');
 const previewPanel = document.getElementById('previewPanel');
 const refreshPreviewButton = document.getElementById('refreshPreview');
 const saveButtonEditor = document.getElementById('saveButtonEditor');
+const saveProjectsButton = document.getElementById('saveProjectsButton');
 const refreshPreviewEditor = document.getElementById('refreshPreviewEditor');
+const refreshMessagesButton = document.getElementById('refreshMessagesButton');
 const saveButtonStatus = document.getElementById('saveButtonStatus');
 const dashboardStats = document.getElementById('dashboardStats');
+const dashboardMessages = document.getElementById('dashboardMessages');
 const pageLinks = document.querySelectorAll('[data-page]');
 const pageSections = {
     dashboard: document.getElementById('page-dashboard'),
@@ -149,7 +152,7 @@ function createProjectRow(project = {}, index = 0) {
                 <input class="project-category w-full rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-100 outline-none focus:border-neonBlue" value="${project.category || ''}" />
             </div>
         </div>
-        <div class="grid gap-4 mt-4 md:grid-cols-2">
+        <div class="grid gap-4 mt-4 md:grid-cols-3">
             <div>
                 <label class="block text-slate-300 text-sm mb-1">Status</label>
                 <input class="project-status w-full rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-100 outline-none focus:border-neonBlue" value="${project.status || ''}" />
@@ -160,6 +163,10 @@ function createProjectRow(project = {}, index = 0) {
                     <option value="public" ${project.privacy !== 'private' ? 'selected' : ''}>Public</option>
                     <option value="private" ${project.privacy === 'private' ? 'selected' : ''}>Private</option>
                 </select>
+            </div>
+            <div>
+                <label class="block text-slate-300 text-sm mb-1">Date</label>
+                <input class="project-date w-full rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-100 outline-none focus:border-neonBlue" type="date" value="${project.date || ''}" ${isEncrypted ? 'disabled' : ''} />
             </div>
         </div>
         <div class="mt-4">
@@ -365,6 +372,7 @@ async function loadContent() {
         updateFeatureRows(Array.isArray(data.features) ? data.features : []);
         updateStatRows(Array.isArray(data.stats) ? data.stats : []);
         renderDashboardStats(data);
+        await loadMessages();
 
         setStatus('Loaded current content. Edit the fields and save.', 'success');
     } catch (error) {
@@ -564,6 +572,50 @@ function renderDashboardStats(data) {
     `;
 }
 
+function renderDashboardMessages(messages = []) {
+    if (!dashboardMessages) return;
+    if (!messages.length) {
+        dashboardMessages.innerHTML = `
+            <div class="rounded-2xl border border-slate-700 bg-slate-950/90 p-4 text-slate-400">
+                No messages have arrived yet.
+            </div>
+        `;
+        return;
+    }
+
+    dashboardMessages.innerHTML = messages.map(message => `
+        <div class="rounded-2xl border border-slate-700 bg-slate-950/90 p-4">
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                    <p class="text-sm text-slate-400">${new Date(message.timestamp).toLocaleString()}</p>
+                    <p class="text-white font-semibold">${message.name} <span class="text-slate-500">• ${message.email}</span></p>
+                </div>
+                <span class="rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-xs uppercase tracking-widest text-slate-400">ID ${message.id}</span>
+            </div>
+            <p class="mt-4 text-slate-300 text-sm leading-6">${message.message}</p>
+        </div>
+    `).join('');
+}
+
+async function loadMessages() {
+    if (!refreshMessagesButton) return;
+
+    try {
+        const response = await fetch(`${API_BASE}/messages`);
+        if (!response.ok) throw new Error('Failed to load messages');
+        const payload = await response.json();
+        renderDashboardMessages(Array.isArray(payload.messages) ? payload.messages : []);
+    } catch (error) {
+        if (!dashboardMessages) return;
+        dashboardMessages.innerHTML = `
+            <div class="rounded-2xl border border-slate-700 bg-slate-950/90 p-4 text-rose-400">
+                Unable to load messages. Make sure you are logged in and the backend is running.
+            </div>
+        `;
+        console.error(error);
+    }
+}
+
 function textToArrayBuffer(text) {
     return new TextEncoder().encode(text);
 }
@@ -597,7 +649,8 @@ async function encryptProjectRow(wrapper, password) {
     const link = wrapper.querySelector('.project-link').value.trim();
     const description = wrapper.querySelector('.project-description').value.trim();
     const tech = wrapper.querySelector('.project-tech').value.trim();
-    const payload = JSON.stringify({ link, description, tech });
+    const date = wrapper.querySelector('.project-date').value.trim();
+    const payload = JSON.stringify({ link, description, tech, date });
     const key = await deriveKey(password);
     const iv = window.crypto.getRandomValues(new Uint8Array(12));
     const encryptedData = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, textToArrayBuffer(payload));
@@ -633,7 +686,7 @@ async function decryptProjectRow(wrapper, password) {
         );
 
         const decoded = new TextDecoder().decode(decrypted);
-        const { link, description, tech } = JSON.parse(decoded);
+        const { link, description, tech, date } = JSON.parse(decoded);
 
         wrapper.dataset.encrypted = 'false';
         wrapper.dataset.payload = '';
@@ -641,6 +694,9 @@ async function decryptProjectRow(wrapper, password) {
         wrapper.querySelector('.project-link').value = link;
         wrapper.querySelector('.project-description').value = description;
         wrapper.querySelector('.project-tech').value = tech;
+        if (wrapper.querySelector('.project-date')) {
+            wrapper.querySelector('.project-date').value = date || '';
+        }
         wrapper.querySelector('.project-link').disabled = false;
         wrapper.querySelector('.project-description').disabled = false;
         wrapper.querySelector('.project-tech').disabled = false;
@@ -767,6 +823,14 @@ adminForm.addEventListener('input', () => {
 saveButton.addEventListener('click', saveContent);
 if (saveButtonEditor) {
     saveButtonEditor.addEventListener('click', saveContent);
+}
+
+if (saveProjectsButton) {
+    saveProjectsButton.addEventListener('click', saveContent);
+}
+
+if (refreshMessagesButton) {
+    refreshMessagesButton.addEventListener('click', loadMessages);
 }
 
 window.addEventListener('popstate', () => {

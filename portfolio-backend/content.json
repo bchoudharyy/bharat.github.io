@@ -1,0 +1,55 @@
+{
+  "name": "Bharat",
+  "brand": "CYBER-PORTAL",
+  "tagline": "Cybersecurity engineer & full-stack developer protecting systems with code.",
+  "about": "I build secure architecture, harden applications, and deliver polished developer solutions that defend valuable assets. My work spans penetration testing, secure backend services, and modern web experiences.",
+  "photoUrl": "https://scontent.cdninstagram.com/v/t51.82787-19/681857327_18047410379536849_4528642459043713391_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=109&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=2aqXuF09tOkQ7kNvwGy9pDg&_nc_oc=AdpPd2wDbDaemjPWL-Xxie-bVrrJQAvwCtQJNd0IneqEiImTBSCTiNMU7qUzFBa--XkXMkDnFm7BVlKUbAxOXJiJ&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_gid=dtNPPWm34pIjJoA2sCWdmQ&_nc_ss=7b6a8&oh=00_Af4pBLDf3gYMnFxKPPk8zyenFMXJLIIsfyaErqMgkHt_IQ&oe=6A14DF71",
+  "projects": [
+    {
+      "title": "Quantum API",
+      "category": "System Tool",
+      "status": "READY",
+      "privacy": "public",
+      "link": "#",
+      "description": "A secure Node.js/Express microservice engineered for encrypted payload routing and real-time channel management.",
+      "tech": "Node.js / Express / WebSocket"
+    },
+    {
+      "title": "Neural Net Dashboard",
+      "category": "Web App",
+      "status": "STABLE",
+      "privacy": "public",
+      "link": "#",
+      "description": "A reactive analytics dashboard optimized for adaptive threat metrics, monitoring, and incident reporting.",
+      "tech": "JavaScript / Tailwind / API"
+    }
+  ],
+  "skills": [
+    "Cybersecurity",
+    "Secure App Design",
+    "Node.js",
+    "React",
+    "Python",
+    "Pentesting",
+    "Cloud Security"
+  ],
+  "certifications": [
+    "OSCP",
+    "CEH",
+    "CompTIA Security+",
+    "B.Tech Computer Science"
+  ],
+  "contactEmail": "crcbharatchoudhary@gmail.com",
+  "contactLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/bchoudharyy",
+      "icon": "🐙"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://linkedin.com/",
+      "icon": "🔗"
+    }
+  ]
+}

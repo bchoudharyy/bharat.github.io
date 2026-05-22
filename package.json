@@ -1,0 +1,14 @@
+{
+  "name": "bharat-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node portfolio-backend/server.js",
+    "dev": "nodemon portfolio-backend/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}

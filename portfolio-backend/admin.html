@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans">
+    <div class="max-w-7xl mx-auto p-6">
+        <header class="mb-6 rounded-3xl border border-slate-700 bg-slate-900/95 p-6 shadow-2xl shadow-slate-950/40">
+            <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-neonBlue">/admin</h1>
+                    <p class="mt-2 text-slate-400 max-w-2xl">One admin workspace for login, content editing, project management, and protected project encryption.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <a href="/admin/dashboard" data-page="dashboard" class="page-link rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-slate-200 hover:border-neonBlue">Dashboard</a>
+                    <a href="/admin/editor" data-page="editor" class="page-link rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-slate-200 hover:border-neonBlue">Editor</a>
+                    <a href="/admin/projects" data-page="projects" class="page-link rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-slate-200 hover:border-neonBlue">Projects</a>
+                    <a href="/admin/encryptor" data-page="encryptor" class="page-link rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-slate-200 hover:border-neonBlue">Encryptor</a>
+                </div>
+            </div>
+        </header>
+
+        <div id="adminStatus" class="mb-6 text-sm text-slate-400">Ready to load and save portfolio data.</div>
+
+        <div class="grid gap-6 lg:grid-cols-[1fr_360px]">
+            <main class="space-y-6">
+                <section id="page-dashboard" class="space-y-6">
+                    <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-6 shadow-lg shadow-slate-950/40">
+                        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                            <div>
+                                <h2 class="text-xl font-semibold text-white">Admin Dashboard</h2>
+                                <p class="mt-2 text-slate-400">Review portfolio status, session health, and project visibility.</p>
+                            </div>
+                            <div class="flex flex-wrap gap-3">
+                                <button id="loadButton" class="rounded-full bg-neonBlue px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100">Load content</button>
+                                <button id="saveButton" class="rounded-full bg-neonPink px-5 py-3 text-sm font-semibold text-white transition hover:bg-pink-500">Save content</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="dashboardStats" class="grid gap-4 md:grid-cols-2 xl:grid-cols-4"></div>
+                    <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-6">
+                        <p class="text-slate-400">This area is your admin command center. Use the navigation above to switch between editor, project management, and encryption workflows.</p>
+                    </div>
+                </section>
+
+                <section id="page-editor" class="space-y-6 hidden">
+                    <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-6">
+                        <h2 class="text-xl font-semibold text-white mb-4">Portfolio Editor</h2>
+                        <form id="adminForm" class="space-y-6">
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label class="block text-slate-300 mb-2 text-sm">Name</label>
+                                    <input id="heroName" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" />
+                                </div>
+                                <div>
+                                    <label class="block text-slate-300 mb-2 text-sm">Brand</label>
+                                    <input id="heroBrand" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-300 mb-2 text-sm">Tagline</label>
+                                <textarea id="heroTagline" rows="2" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue"></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-300 mb-2 text-sm">About</label>
+                                <textarea id="aboutText" rows="4" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue"></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-300 mb-2 text-sm">Hero photo URL</label>
+                                <input id="heroPhotoUrl" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" placeholder="https://example.com/your-photo.jpg" />
+                                <p class="text-slate-500 text-xs mt-2">Set the image URL shown beside your intro. It will display in black & white by default and become full color on hover.</p>
+                            </div>
+
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label class="block text-slate-300 mb-2 text-sm">Skills</label>
+                                    <textarea id="skillsText" rows="3" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" placeholder="Comma-separated skills"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-slate-300 mb-2 text-sm">Certifications</label>
+                                    <textarea id="certificationsText" rows="3" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" placeholder="Comma-separated certifications"></textarea>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-slate-300 mb-2 text-sm">Contact email</label>
+                                <input id="contactEmail" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" />
+                            </div>
+
+                            <div>
+                                <div class="flex items-center justify-between mb-3">
+                                    <p class="text-slate-300 text-sm">Contact links</p>
+                                    <button id="addLink" type="button" class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-200 hover:border-neonBlue">Add link</button>
+                                </div>
+                                <div id="contactLinksList" class="space-y-4"></div>
+                            </div>
+
+                            <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-800">
+                                <button id="saveButtonEditor" type="button" class="rounded-full bg-neonPink px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-500/30 transition duration-200 hover:bg-pink-500 hover:scale-[1.01] disabled:opacity-50 disabled:cursor-not-allowed">Save content</button>
+                                <button id="refreshPreviewEditor" type="button" class="rounded-full border border-slate-700 bg-slate-950 px-5 py-3 text-sm font-semibold text-slate-200 hover:border-neonBlue">Refresh preview</button>
+                                <span id="saveButtonStatus" class="text-slate-400 text-sm">Use Save content to write changes to the backend data store.</span>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <section id="page-projects" class="space-y-6 hidden">
+                    <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-6">
+                        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                            <div>
+                                <h2 class="text-xl font-semibold text-white">Projects Manager</h2>
+                                <p class="mt-2 text-slate-400">Manage public and private projects separately, and control project visibility.</p>
+                            </div>
+                            <button id="addProject" type="button" class="rounded-full bg-neonBlue px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-slate-100">Add project</button>
+                        </div>
+                    </div>
+                    <div id="projectsList" class="space-y-4"></div>
+                </section>
+
+                <section id="page-encryptor" class="space-y-6 hidden">
+                    <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-6">
+                        <h2 class="text-xl font-semibold text-white mb-4">Project Encryptor</h2>
+                        <div class="grid gap-4 md:grid-cols-2">
+                            <div>
+                                <label class="block text-slate-300 mb-2 text-sm">Select project</label>
+                                <select id="encryptorProjectSelect" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue"></select>
+                            </div>
+                            <div>
+                                <label class="block text-slate-300 mb-2 text-sm">Encryption password</label>
+                                <input id="encryptorPassword" type="password" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" placeholder="Enter a strong password" />
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                            <button id="encryptButton" type="button" class="rounded-full bg-neonPink px-5 py-3 text-sm font-semibold text-white hover:bg-pink-500">Encrypt project</button>
+                            <button id="decryptButton" type="button" class="rounded-full border border-slate-700 bg-slate-950 px-5 py-3 text-sm text-slate-200 hover:border-neonBlue">Decrypt project</button>
+                        </div>
+                        <p id="encryptorStatus" class="text-sm text-slate-400"></p>
+                    </div>
+                </section>
+            </main>
+
+            <aside class="space-y-6">
+                <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-6">
+                    <div class="flex items-center justify-between gap-4">
+                        <div>
+                            <p class="text-slate-300 text-sm">Admin session active.</p>
+                            <p class="text-slate-500 text-xs">Your session lasts one hour and is managed securely by the backend.</p>
+                        </div>
+                        <button id="logoutButton" type="button" class="rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-slate-200 hover:border-neonPink">Logout</button>
+                    </div>
+                </div>
+                <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-bold text-white">Preview</h2>
+                        <button id="refreshPreview" type="button" class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-200 hover:border-neonBlue">Refresh</button>
+                    </div>
+                    <div id="previewPanel" class="space-y-4 text-slate-200 text-sm"></div>
+                </div>
+                <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-6">
+                    <h2 class="text-lg font-bold text-white mb-3">Public site</h2>
+                    <p class="text-slate-400 text-sm">Normal visitors use the portfolio page directly.</p>
+                    <p class="font-mono mt-3 text-slate-200 text-sm">http://localhost:5000/</p>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script src="/admin.js"></script>
+</body>
+</html>

@@ -1,8 +1,46 @@
 {
   "name": "Bharat",
   "brand": "CYBER-PORTAL",
+  "siteTitle": "BHARAT // CYBER-PORTAL",
+  "siteDescription": "A cybersecurity and full-stack portfolio for secure app services, threat intelligence, and modern dev operations.",
   "tagline": "Cybersecurity engineer & full-stack developer protecting systems with code.",
+  "ctaPrimaryText": "Execute portfolio",
+  "ctaPrimaryLink": "#projects",
+  "ctaSecondaryText": "Establish link",
+  "ctaSecondaryLink": "#contact",
   "about": "I build secure architecture, harden applications, and deliver polished developer solutions that defend valuable assets. My work spans penetration testing, secure backend services, and modern web experiences.",
+  "features": [
+    {
+      "icon": "🛡️",
+      "title": "Security-first systems",
+      "description": "Design and deploy hardened applications with defense-in-depth and secure architecture patterns."
+    },
+    {
+      "icon": "⚡",
+      "title": "High-performance backend",
+      "description": "Build scalable APIs and automation pipelines with modern Node.js and cloud-native infrastructure."
+    },
+    {
+      "icon": "🔍",
+      "title": "Threat intelligence",
+      "description": "Deliver observability, incident response, and risk mitigation through proactive testing."
+    }
+  ],
+  "stats": [
+    {
+      "value": "12+",
+      "label": "Years secure development"
+    },
+    {
+      "value": "30+",
+      "label": "Projects launched"
+    },
+    {
+      "value": "120%",
+      "label": "Reliability improvement"
+    }
+  ],
+  "footerNote": "All rights secured // User access granted.",
   "photoUrl": "https://scontent.cdninstagram.com/v/t51.82787-19/681857327_18047410379536849_4528642459043713391_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=109&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=2aqXuF09tOkQ7kNvwGy9pDg&_nc_oc=AdpPd2wDbDaemjPWL-Xxie-bVrrJQAvwCtQJNd0IneqEiImTBSCTiNMU7qUzFBa--XkXMkDnFm7BVlKUbAxOXJiJ&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_gid=dtNPPWm34pIjJoA2sCWdmQ&_nc_ss=7b6a8&oh=00_Af4pBLDf3gYMnFxKPPk8zyenFMXJLIIsfyaErqMgkHt_IQ&oe=6A14DF71",
   "projects": [
     {

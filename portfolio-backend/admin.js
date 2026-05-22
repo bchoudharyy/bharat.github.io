@@ -11,10 +11,21 @@ const projectsList = document.getElementById('projectsList');
 const addProjectButton = document.getElementById('addProject');
 const skillsTextInput = document.getElementById('skillsText');
 const certificationsTextInput = document.getElementById('certificationsText');
-const contactEmailInput = document.getElementById('contactEmail');
+const siteTitleInput = document.getElementById('siteTitle');
+const siteDescriptionInput = document.getElementById('siteDescription');
+const ctaPrimaryTextInput = document.getElementById('ctaPrimaryText');
+const ctaPrimaryLinkInput = document.getElementById('ctaPrimaryLink');
+const ctaSecondaryTextInput = document.getElementById('ctaSecondaryText');
+const ctaSecondaryLinkInput = document.getElementById('ctaSecondaryLink');
 const heroPhotoUrlInput = document.getElementById('heroPhotoUrl');
+const contactEmailInput = document.getElementById('contactEmail');
+const footerNoteInput = document.getElementById('footerNote');
 const contactLinksList = document.getElementById('contactLinksList');
 const addLinkButton = document.getElementById('addLink');
+const featuresList = document.getElementById('featuresList');
+const addFeatureButton = document.getElementById('addFeature');
+const statsList = document.getElementById('statsList');
+const addStatButton = document.getElementById('addStat');
 const previewPanel = document.getElementById('previewPanel');
 const refreshPreviewButton = document.getElementById('refreshPreview');
 const saveButtonEditor = document.getElementById('saveButtonEditor');
@@ -210,6 +221,60 @@ function createContactLinkRow(link = {}) {
     return wrapper;
 }
 
+function createFeatureRow(feature = {}) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'rounded-2xl border border-slate-700 bg-slate-950/90 p-4 space-y-4';
+
+    wrapper.innerHTML = `
+        <div class="flex items-center justify-between gap-4">
+            <h3 class="font-semibold text-slate-100">Feature</h3>
+            <button type="button" class="removeFeature rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-xs text-slate-300 hover:border-neonPink">Remove</button>
+        </div>
+        <div class="grid gap-4 md:grid-cols-3">
+            <div>
+                <label class="block text-slate-300 text-sm mb-1">Icon</label>
+                <input class="feature-icon w-full rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-100 outline-none focus:border-neonBlue" value="${feature.icon || ''}" placeholder="🚀" />
+            </div>
+            <div class="md:col-span-2">
+                <label class="block text-slate-300 text-sm mb-1">Title</label>
+                <input class="feature-title w-full rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-100 outline-none focus:border-neonBlue" value="${feature.title || ''}" />
+            </div>
+        </div>
+        <div>
+            <label class="block text-slate-300 text-sm mb-1">Description</label>
+            <textarea class="feature-description w-full rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-100 outline-none focus:border-neonBlue" rows="3">${feature.description || ''}</textarea>
+        </div>
+    `;
+
+    wrapper.querySelector('.removeFeature').addEventListener('click', () => wrapper.remove());
+    return wrapper;
+}
+
+function createStatRow(stat = {}) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'rounded-2xl border border-slate-700 bg-slate-950/90 p-4 space-y-4';
+
+    wrapper.innerHTML = `
+        <div class="flex items-center justify-between gap-4">
+            <h3 class="font-semibold text-slate-100">Metric</h3>
+            <button type="button" class="removeStat rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-xs text-slate-300 hover:border-neonPink">Remove</button>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2">
+            <div>
+                <label class="block text-slate-300 text-sm mb-1">Value</label>
+                <input class="stat-value w-full rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-100 outline-none focus:border-neonBlue" value="${stat.value || ''}" placeholder="12+" />
+            </div>
+            <div>
+                <label class="block text-slate-300 text-sm mb-1">Label</label>
+                <input class="stat-label w-full rounded-xl border border-slate-700 bg-slate-900 p-3 text-slate-100 outline-none focus:border-neonBlue" value="${stat.label || ''}" placeholder="Projects launched" />
+            </div>
+        </div>
+    `;
+
+    wrapper.querySelector('.removeStat').addEventListener('click', () => wrapper.remove());
+    return wrapper;
+}
+
 function clearProjects() {
     projectsList.innerHTML = '';
 }
@@ -237,6 +302,34 @@ function updateLinkRows(links = []) {
     links.forEach(link => contactLinksList.appendChild(createContactLinkRow(link)));
 }
 
+function clearFeatures() {
+    if (!featuresList) return;
+    featuresList.innerHTML = '';
+}
+
+function clearStats() {
+    if (!statsList) return;
+    statsList.innerHTML = '';
+}
+
+function updateFeatureRows(features = []) {
+    clearFeatures();
+    if (!features.length) {
+        featuresList.appendChild(createFeatureRow({}));
+        return;
+    }
+    features.forEach(feature => featuresList.appendChild(createFeatureRow(feature)));
+}
+
+function updateStatRows(stats = []) {
+    clearStats();
+    if (!stats.length) {
+        statsList.appendChild(createStatRow({}));
+        return;
+    }
+    stats.forEach(stat => statsList.appendChild(createStatRow(stat)));
+}
+
 async function loadContent() {
     setStatus('Loading content...', 'info');
     try {
@@ -251,17 +344,26 @@ async function loadContent() {
         const data = await response.json();
         currentContent = data;
 
+        siteTitleInput.value = data.siteTitle || '';
+        siteDescriptionInput.value = data.siteDescription || '';
         heroNameInput.value = data.name || '';
         heroBrandInput.value = data.brand || '';
         heroTaglineInput.value = data.tagline || '';
         aboutTextInput.value = data.about || '';
+        ctaPrimaryTextInput.value = data.ctaPrimaryText || '';
+        ctaPrimaryLinkInput.value = data.ctaPrimaryLink || '';
+        ctaSecondaryTextInput.value = data.ctaSecondaryText || '';
+        ctaSecondaryLinkInput.value = data.ctaSecondaryLink || '';
         heroPhotoUrlInput.value = data.photoUrl || '';
+        footerNoteInput.value = data.footerNote || '';
         skillsTextInput.value = Array.isArray(data.skills) ? data.skills.join(', ') : '';
         certificationsTextInput.value = Array.isArray(data.certifications) ? data.certifications.join(', ') : '';
         contactEmailInput.value = data.contactEmail || '';
 
         updateProjectRows(Array.isArray(data.projects) ? data.projects : []);
         updateLinkRows(Array.isArray(data.contactLinks) ? data.contactLinks : []);
+        updateFeatureRows(Array.isArray(data.features) ? data.features : []);
+        updateStatRows(Array.isArray(data.stats) ? data.stats : []);
         renderDashboardStats(data);
 
         setStatus('Loaded current content. Edit the fields and save.', 'success');
@@ -307,18 +409,44 @@ function collectLinks() {
     })).filter(link => link.name || link.url);
 }
 
+function collectFeatures() {
+    if (!featuresList) return [];
+    return Array.from(featuresList.children).map(wrapper => ({
+        icon: wrapper.querySelector('.feature-icon').value.trim(),
+        title: wrapper.querySelector('.feature-title').value.trim(),
+        description: wrapper.querySelector('.feature-description').value.trim()
+    })).filter(feature => feature.title || feature.description || feature.icon);
+}
+
+function collectStats() {
+    if (!statsList) return [];
+    return Array.from(statsList.children).map(wrapper => ({
+        value: wrapper.querySelector('.stat-value').value.trim(),
+        label: wrapper.querySelector('.stat-label').value.trim()
+    })).filter(stat => stat.value || stat.label);
+}
+
 function gatherFormData() {
     return {
+        siteTitle: siteTitleInput.value.trim(),
+        siteDescription: siteDescriptionInput.value.trim(),
         name: heroNameInput.value.trim(),
         brand: heroBrandInput.value.trim(),
         tagline: heroTaglineInput.value.trim(),
         about: aboutTextInput.value.trim(),
+        ctaPrimaryText: ctaPrimaryTextInput.value.trim(),
+        ctaPrimaryLink: ctaPrimaryLinkInput.value.trim(),
+        ctaSecondaryText: ctaSecondaryTextInput.value.trim(),
+        ctaSecondaryLink: ctaSecondaryLinkInput.value.trim(),
         photoUrl: heroPhotoUrlInput.value.trim(),
         projects: collectProjects(),
         skills: skillsTextInput.value.split(',').map(item => item.trim()).filter(Boolean),
         certifications: certificationsTextInput.value.split(',').map(item => item.trim()).filter(Boolean),
         contactEmail: contactEmailInput.value.trim(),
-        contactLinks: collectLinks()
+        footerNote: footerNoteInput.value.trim(),
+        contactLinks: collectLinks(),
+        features: collectFeatures(),
+        stats: collectStats()
     };
 }
 
@@ -611,6 +739,20 @@ refreshPreviewButton.addEventListener('click', () => {
 if (refreshPreviewEditor) {
     refreshPreviewEditor.addEventListener('click', () => {
         renderPreview(gatherFormData());
+    });
+}
+
+if (addFeatureButton) {
+    addFeatureButton.addEventListener('click', () => {
+        if (!featuresList) return;
+        featuresList.appendChild(createFeatureRow({}));
+    });
+}
+
+if (addStatButton) {
+    addStatButton.addEventListener('click', () => {
+        if (!statsList) return;
+        statsList.appendChild(createStatRow({}));
     });
 }
 

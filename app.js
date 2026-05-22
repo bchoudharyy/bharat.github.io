@@ -3,9 +3,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const contactForm = document.getElementById("contactForm");
     const statusText = document.getElementById("formStatus");
     const heroName = document.getElementById("heroName");
+    const heroBrand = document.getElementById("heroBrand");
     const heroTagline = document.getElementById("heroTagline");
     const aboutText = document.getElementById("aboutText");
+    const heroPrimaryCta = document.getElementById("heroPrimaryCta");
+    const heroSecondaryCta = document.getElementById("heroSecondaryCta");
+    const metaDescription = document.getElementById("metaDescription");
     const projectsContainer = document.getElementById("projectsContainer");
+    const featuresContainer = document.getElementById("featuresContainer");
+    const statsContainer = document.getElementById("statsContainer");
     const skillsList = document.getElementById("skillsList");
     const certificationsList = document.getElementById("certificationsList");
     const contactEmail = document.getElementById("contactEmail");
@@ -13,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const heroPhoto = document.getElementById('heroPhoto');
     const heroPhotoFallback = document.getElementById('heroPhotoFallback');
     const footerYear = document.getElementById("footerYear");
+    const footerText = document.getElementById("footerText");
 
     const API_BASE_URL = '';
     const CONTENT_API_URL = `${API_BASE_URL}/api/content`;
@@ -23,10 +30,21 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderContent(data) {
         if (!data) return;
 
-        document.title = `${data.name} // ${data.brand}`;
+        document.title = data.siteTitle || `${data.name} // ${data.brand}`;
+        if (metaDescription) metaDescription.content = data.siteDescription || '';
         heroName.innerText = data.name;
+        heroBrand.innerText = data.brand;
         heroTagline.innerText = data.tagline;
         aboutText.innerText = data.about;
+        if (heroPrimaryCta) {
+            heroPrimaryCta.innerText = data.ctaPrimaryText || 'Explore projects';
+            heroPrimaryCta.href = data.ctaPrimaryLink || '#projects';
+        }
+        if (heroSecondaryCta) {
+            heroSecondaryCta.innerText = data.ctaSecondaryText || 'Contact';
+            heroSecondaryCta.href = data.ctaSecondaryLink || '#contact';
+        }
+        if (footerText) footerText.innerText = data.footerNote || 'All rights secured // User access granted.';
 
         const photoUrl = data.photoUrl || '';
         if (photoUrl) {
@@ -64,6 +82,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 `;
             }).join('');
+        }
+
+        if (Array.isArray(data.features) && data.features.length && featuresContainer) {
+            featuresContainer.innerHTML = data.features.map(feature => `
+                <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-6 shadow-lg shadow-slate-950/40 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="text-4xl mb-4">${feature.icon || '🚀'}</div>
+                    <h3 class="text-xl font-bold text-white mb-2">${feature.title || 'Feature title'}</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">${feature.description || 'Feature description goes here.'}</p>
+                </div>
+            `).join('');
+        }
+
+        if (Array.isArray(data.stats) && data.stats.length && statsContainer) {
+            statsContainer.innerHTML = data.stats.map(stat => `
+                <div class="rounded-3xl border border-slate-700 bg-slate-950/90 p-6 text-center shadow-glow-purple">
+                    <p class="text-4xl font-bold text-white">${stat.value || '--'}</p>
+                    <p class="text-slate-400 text-sm mt-2">${stat.label || 'Metric description'}</p>
+                </div>
+            `).join('');
         }
 
         if (Array.isArray(data.skills) && data.skills.length) {

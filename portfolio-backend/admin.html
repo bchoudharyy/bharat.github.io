@@ -52,6 +52,16 @@
                         <form id="adminForm" class="space-y-6">
                             <div class="grid gap-4 md:grid-cols-2">
                                 <div>
+                                    <label class="block text-slate-300 mb-2 text-sm">Site title</label>
+                                    <input id="siteTitle" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" />
+                                </div>
+                                <div>
+                                    <label class="block text-slate-300 mb-2 text-sm">Site description</label>
+                                    <input id="siteDescription" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" />
+                                </div>
+                            </div>
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
                                     <label class="block text-slate-300 mb-2 text-sm">Name</label>
                                     <input id="heroName" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" />
                                 </div>
@@ -71,6 +81,26 @@
                                 <textarea id="aboutText" rows="4" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue"></textarea>
                             </div>
 
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label class="block text-slate-300 mb-2 text-sm">Primary CTA text</label>
+                                    <input id="ctaPrimaryText" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" placeholder="Explore projects" />
+                                </div>
+                                <div>
+                                    <label class="block text-slate-300 mb-2 text-sm">Primary CTA link</label>
+                                    <input id="ctaPrimaryLink" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" placeholder="#projects" />
+                                </div>
+                            </div>
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label class="block text-slate-300 mb-2 text-sm">Secondary CTA text</label>
+                                    <input id="ctaSecondaryText" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" placeholder="Contact" />
+                                </div>
+                                <div>
+                                    <label class="block text-slate-300 mb-2 text-sm">Secondary CTA link</label>
+                                    <input id="ctaSecondaryLink" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" placeholder="#contact" />
+                                </div>
+                            </div>
                             <div>
                                 <label class="block text-slate-300 mb-2 text-sm">Hero photo URL</label>
                                 <input id="heroPhotoUrl" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" placeholder="https://example.com/your-photo.jpg" />
@@ -93,12 +123,32 @@
                                 <input id="contactEmail" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" />
                             </div>
 
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label class="block text-slate-300 mb-2 text-sm">Footer note</label>
+                                    <input id="footerNote" class="w-full rounded-2xl border border-slate-700 bg-slate-950 p-3 text-slate-100 outline-none focus:border-neonBlue" placeholder="All rights secured // User access granted." />
+                                </div>
+                            </div>
                             <div>
                                 <div class="flex items-center justify-between mb-3">
                                     <p class="text-slate-300 text-sm">Contact links</p>
                                     <button id="addLink" type="button" class="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-sm text-slate-200 hover:border-neonBlue">Add link</button>
                                 </div>
                                 <div id="contactLinksList" class="space-y-4"></div>
+                            </div>
+                            <div class="rounded-2xl border border-slate-700 bg-slate-900/90 p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="text-white font-semibold">Feature cards</h3>
+                                    <button id="addFeature" type="button" class="rounded-full bg-neonBlue px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-100">Add feature</button>
+                                </div>
+                                <div id="featuresList" class="space-y-4"></div>
+                            </div>
+                            <div class="rounded-2xl border border-slate-700 bg-slate-900/90 p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="text-white font-semibold">Metric cards</h3>
+                                    <button id="addStat" type="button" class="rounded-full bg-neonBlue px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-100">Add stat</button>
+                                </div>
+                                <div id="statsList" class="space-y-4"></div>
                             </div>
 
                             <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-800">

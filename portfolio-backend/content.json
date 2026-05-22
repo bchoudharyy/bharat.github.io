@@ -85,8 +85,18 @@
       "icon": "🐙"
     },
     {
+      "name": "Instagram",
+      "url": "https://instagram.com/bchoudharyy",
+      "icon": "📸"
+    },
+    {
+      "name": "Telegram",
+      "url": "https://t.me/bchoudharyy",
+      "icon": "✈️"
+    },
+    {
       "name": "LinkedIn",
-      "url": "https://linkedin.com/",
+      "url": "https://linkedin.com/in/bchoudharyy",
       "icon": "🔗"
     }
   ]
